@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gabriel.course.entities.User;
 import com.gabriel.course.repositories.UserRepository;
+import com.gabriel.course.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -35,7 +36,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	private void updateData(User entity, User obj) {
